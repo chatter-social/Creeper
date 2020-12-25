@@ -1,2 +1,5 @@
 # Creeper
-Creeper is a dynamic, interpreted language. Documentation and source will be added in the next few days.
+Creeper is a dynamic, interpreted language.
+
+## DISCLAIMER
+Creeper is currently very young, and therefore lacks important features. Feature updates will occur very regularly.

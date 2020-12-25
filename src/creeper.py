@@ -4,18 +4,19 @@ import re
 import sys
 
 class CreeperLexer(Lexer): 
-    tokens = { NAME, NUMBER, STRING, FLOAT } 
+    tokens = { VAR, FUNCTION, NAME, NUMBER, STRING, FLOAT } 
     ignore = '\t '
     literals = { '=', '+', '-', '/',  
                 '*', '(', ')', ',', ';', '&', '(', ')', ':', '.'}
   
   
-    # define tokens as regular expressions 
+    # define tokens as regular expressions
+    VAR = r'var'
+    FUNCTION = r'define'
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
     STRING = r'\".*?\"'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
-    # FUNCTION = r'(?s)define.*\(.*\):.*end'
-
+    
     # print(re.findall(FUNCTION, '''define add(x, y):
 
 # z = x + y
@@ -36,13 +37,10 @@ class CreeperLexer(Lexer):
         t.value = float(t.value)
         return t
     
-    '''
-    # function token
     @_(r'(?s)define.*\(.*\):.*end')
     def FUNCTION(self, t):
         t.value = str(t.value)
         return t
-     '''
   
     # comment token
     @_(r'//.*') 
@@ -84,7 +82,7 @@ class CreeperParser(Parser):
     def statement(self, p): 
         return p.function_call
 
-    @_('NAME "=" expr') 
+    @_('VAR NAME "=" expr') 
     def var_assign(self, p): 
         return ('var_assign', p.NAME, p.expr) 
 
@@ -92,7 +90,7 @@ class CreeperParser(Parser):
     def var_assign(self, p): 
         return ('var_assign', p.NAME, p.STRING)
     
-    @_('NAME "(" NAME ")" ":" STRING ";"') 
+    @_('FUNCTION NAME "(" NAME ")" ":" STRING ";"') 
     def function_define(self, p): 
         return ('function_define', p.NAME0, p.NAME1, p.STRING)
 
@@ -254,4 +252,3 @@ if __name__ == '__main__':
                 print(tree)
                 CreeperExecute(tree, env)
                 print(env)
-

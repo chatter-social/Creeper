@@ -14,7 +14,7 @@ class CreeperLexer(Lexer):
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
     STRING = r'\".*?\"'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
-    FUNCTION = r'(?s)define.*\(.*\):.*end'
+    # FUNCTION = r'(?s)define.*\(.*\):.*end'
 
     # print(re.findall(FUNCTION, '''define add(x, y):
 
@@ -36,10 +36,13 @@ class CreeperLexer(Lexer):
         t.value = float(t.value)
         return t
     
+    '''
+    # function token
     @_(r'(?s)define.*\(.*\):.*end')
     def FUNCTION(self, t):
         t.value = str(t.value)
         return t
+     '''
   
     # comment token
     @_(r'//.*') 

@@ -37,11 +37,6 @@ class CreeperLexer(Lexer):
     def FLOAT(self, t):
         t.value = float(t.value)
         return t
-    
-    @_(r'(?s)define.*\(.*\):.*end')
-    def FUNCTION(self, t):
-        t.value = str(t.value)
-        return t
   
     # comment token
     @_(r'//.*') 

@@ -7,9 +7,10 @@ class CreeperLexer(Lexer):
     tokens = { VAR, FUNCTION, DO, ANYTHING, NAME, STRING, NUMBER, FLOAT }
     ignore = '\t '
     literals = { '=', '+', '-', '/',
-                 '*', '(', ')', ',', 
-                 ';', '&', '(', ')', 
-                 ':', '.', '`', '@'}
+                 '*', '(', ')', ',',
+                 ';', '&', '(', ')',
+                 ':', '.', '`', '@',
+                 '"'}
 
 
     # define tokens as regular expressions
@@ -18,7 +19,7 @@ class CreeperLexer(Lexer):
     DO = r'do|times'
     ANYTHING = r'@.*@'
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
-    STRING = r'\".*?\"'
+    STRING = r'''\".*?\"|\'.*?\''''
     # MULTILINESTRING = r'(?s)\`.*?\`'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
 
@@ -149,7 +150,7 @@ class CreeperExecute:
             print(result)
         if result is not None and isinstance(result, float):
             print(result)
-        if isinstance(result, str) and result[0] == '"':
+        if isinstance(result, str) and result[0] == '"' or result[0] == "'":
             print(result)
 
     def walkTree(self, node):
@@ -189,7 +190,7 @@ class CreeperExecute:
         elif node[0] == 'div':
             return self.walkTree(node[1]) / self.walkTree(node[2])
         elif node[0] == 'concat':
-            tempString = re.sub('["]', '', str(self.walkTree(node[1])) + str(self.walkTree(node[2])))
+            tempString = re.sub('["\']', '', str(self.walkTree(node[1])) + str(self.walkTree(node[2])))
             return f'"{tempString}"'
 
         if node[0] == 'function_define':

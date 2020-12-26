@@ -1,4 +1,4 @@
-// Display the first few numbers of the Fibonacci sequence
+// Creeper program to display the first few numbers of the Fibonacci sequence
 
 // Declare our variables
 var a = 0

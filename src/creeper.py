@@ -90,7 +90,7 @@ class CreeperParser(Parser):
     def var_assign(self, p): 
         return ('var_assign', p.NAME, p.STRING)
     
-    @_('FUNCTION NAME "(" ANYTHING ")" ":" STRING ";"') 
+    @_('FUNCTION NAME "(" ANYTHING ")" ":" STRING') 
     def function_define(self, p): 
         return ('function_define', p.NAME, p.ANYTHING, p.STRING)
 
@@ -200,7 +200,7 @@ class CreeperExecute:
             function_input_list = []
             for value in function_input:
                 try:
-                    value = float(value)
+                    value = int(value)
                 except ValueError:
                     pass
                 function_input_list.append(value)
@@ -208,6 +208,7 @@ class CreeperExecute:
             for variable in range(len(function_call_input)-1):
                 variable = function_call_input[variable]
                 variable = variable.replace('@', '')
+                variable = variable.replace(' ', '')
                 variable_list.append(variable)
             for variable in range(len(variable_list)):
                 try:
@@ -220,7 +221,6 @@ class CreeperExecute:
             parser = CreeperParser()
             for line in function_body:
                 tree = parser.parse(lexer.tokenize(line))
-                print(tree)
                 CreeperExecute(tree, env)
             return node[1]
 
@@ -272,7 +272,6 @@ if __name__ == '__main__':
           
             if text: 
                 tree = parser.parse(lexer.tokenize(text)) 
-                print(tree)
+                # print(tree)
                 CreeperExecute(tree, env)
-                print(env)
-
+                # print(env)

@@ -7,7 +7,7 @@ class CreeperLexer(Lexer):
     tokens = { VAR, FUNCTION, DO, NAME, STRING, NUMBER, FLOAT } 
     ignore = '\t '
     literals = { '=', '+', '-', '/',  
-                '*', '(', ')', ',', ';', '&', '(', ')', ':', '.'}
+                '*', '(', ')', ',', ';', '&', '(', ')', ':', '.', '`'}
   
   
     # define tokens as regular expressions
@@ -16,6 +16,7 @@ class CreeperLexer(Lexer):
     DO = r'do|times'
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
     STRING = r'\".*?\"'
+    # MULTILINESTRING = r'(?s)\`.*?\`'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
     
     # print(re.findall(FUNCTION, '''define add(x, y):
@@ -36,6 +37,11 @@ class CreeperLexer(Lexer):
     @_(r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)')
     def FLOAT(self, t):
         t.value = float(t.value)
+        return t
+    
+    @_(r'(?s)define.*\(.*\):.*end')
+    def FUNCTION(self, t):
+        t.value = str(t.value)
         return t
   
     # comment token

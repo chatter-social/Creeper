@@ -1,0 +1,38 @@
+%YAML 1.2
+---
+
+file_extensions:
+  - cre
+scope: source.example-cre
+contexts:
+  main:
+
+    - match: '"'
+      scope: punctuation.definition.string.begin.example-cre
+      push: double_quoted_string
+
+    - match: '//'
+      scope: punctuation.definition.comment.example-cre
+      push: line_comment
+
+    - match: '\b(if|else|for|while|do)\b'
+      scope: keyword.control.example-cre
+
+    - match: '\b(var|const)\b'
+      scope: keyword.variable.example-cre
+
+    - match: '\b(-)?[0-9.]+\b'
+      scope: constant.numeric.example-cre
+
+  double_quoted_string:
+    - meta_scope: string.quoted.double.example-cre
+    - match: '\\.'
+      scope: constant.character.escape.example-cre
+    - match: '"'
+      scope: punctuation.definition.string.end.example-cre
+      pop: true
+
+  line_comment:
+    - meta_scope: comment.line.example-cre
+    - match: $
+      pop: true

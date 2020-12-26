@@ -4,7 +4,7 @@ import re
 import sys
 
 class CreeperLexer(Lexer): 
-    tokens = { VAR, FUNCTION, NAME, NUMBER, STRING, FLOAT } 
+    tokens = { VAR, FUNCTION, DO, NAME, STRING, NUMBER, FLOAT } 
     ignore = '\t '
     literals = { '=', '+', '-', '/',  
                 '*', '(', ')', ',', ';', '&', '(', ')', ':', '.'}
@@ -13,6 +13,7 @@ class CreeperLexer(Lexer):
     # define tokens as regular expressions
     VAR = r'var'
     FUNCTION = r'define'
+    DO = r'do|times'
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
     STRING = r'\".*?\"'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
@@ -82,11 +83,19 @@ class CreeperParser(Parser):
     def statement(self, p): 
         return p.function_call
 
+    @_('do_loop') 
+    def statement(self, p): 
+        return p.do_loop
+
+    @_('expr') 
+    def statement(self, p): 
+        return (p.expr)
+
     @_('VAR NAME "=" expr') 
     def var_assign(self, p): 
         return ('var_assign', p.NAME, p.expr) 
 
-    @_('NAME "=" STRING ";"') 
+    @_('VAR NAME "=" STRING') 
     def var_assign(self, p): 
         return ('var_assign', p.NAME, p.STRING)
     
@@ -96,13 +105,13 @@ class CreeperParser(Parser):
 
     # NAME "(" ")" ":" STRING
 
-    @_('NAME "(" NAME ")" ";"') 
+    @_('NAME "(" NAME ")"') 
     def function_call(self, p): 
-        return ('function_call', p.NAME0, p.NAME1) 
+        return ('function_call', p.NAME0, p.NAME1)
 
-    @_('expr') 
-    def statement(self, p): 
-        return (p.expr) 
+    @_('DO STRING NUMBER DO') 
+    def do_loop(self, p): 
+        return ('do_loop', p.STRING, p.NUMBER) 
 
     @_('expr "+" expr') 
     def expr(self, p): 
@@ -197,7 +206,6 @@ class CreeperExecute:
             return node[1]
 
         if node[0] == 'function_call':
-            print(node[1])
             variable_name = self.env[node[1] + '_function'].split(',')[0]
             try:
                 value = self.env[variable_name]
@@ -210,7 +218,18 @@ class CreeperExecute:
             for line in function_body:
                 tree = parser.parse(lexer.tokenize(line)) 
                 CreeperExecute(tree, env)
-            return node[1] 
+            return node[1]
+
+        if node[0] == 'do_loop':
+            do_string = self.walkTree(node[1]).replace('"', '')
+            do_string = do_string.split(';')
+            lexer = CreeperLexer() 
+            parser = CreeperParser()
+            for i in range(int(self.walkTree(node[2]))):
+                for line in do_string:
+                    tree = parser.parse(lexer.tokenize(line)) 
+                    CreeperExecute(tree, env)
+            return node[1]
             
         if node[0] == 'var_assign': 
             self.env[node[1]] = self.walkTree(node[2]) 

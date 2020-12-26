@@ -1,0 +1,8 @@
+// Display the first few numbers of the Fibonacci sequence
+
+// Declare our variables
+var a = 0
+var b = 1
+var c = 0
+// Main 'do' loop that performs the algorithm 10 times
+do "c; var c = a + b; var a = b; var b = c" 10 times

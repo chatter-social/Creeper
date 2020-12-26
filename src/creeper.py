@@ -18,12 +18,6 @@ class CreeperLexer(Lexer):
     STRING = r'\".*?\"'
     # MULTILINESTRING = r'(?s)\`.*?\`'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
-    
-    # print(re.findall(FUNCTION, '''define add(x, y):
-
-# z = x + y
-
-# end''')[0])
 
   
     # numerical token 
@@ -37,11 +31,6 @@ class CreeperLexer(Lexer):
     @_(r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)')
     def FLOAT(self, t):
         t.value = float(t.value)
-        return t
-    
-    @_(r'(?s)define.*\(.*\):.*end')
-    def FUNCTION(self, t):
-        t.value = str(t.value)
         return t
   
     # comment token

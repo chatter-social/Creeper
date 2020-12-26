@@ -229,7 +229,7 @@ class CreeperExecute:
             try: 
                 return self.env[node[1]] 
             except LookupError: 
-                print("Undefined name '"+node[1]+"' .") 
+                # print("Undefined name '"+node[1]+"' .") 
                 return 0
 
 if __name__ == '__main__':
@@ -258,6 +258,6 @@ if __name__ == '__main__':
           
             if text: 
                 tree = parser.parse(lexer.tokenize(text)) 
-                print(tree)
+                # print(tree)
                 CreeperExecute(tree, env)
-                print(env)
+                # print(env)

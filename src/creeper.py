@@ -9,8 +9,7 @@ class CreeperLexer(Lexer):
     literals = { '=', '+', '-', '/',
                  '*', '(', ')', ',',
                  ';', '&', '(', ')',
-                 ':', '.', '`', '@',
-                 '"'}
+                 ':', '.', '`', '@',}
 
 
     # define tokens as regular expressions
@@ -19,7 +18,7 @@ class CreeperLexer(Lexer):
     DO = r'do|times'
     ANYTHING = r'@.*@'
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
-    STRING = r'''\".*?\"|\'.*?\''''
+    STRING = r'\".*?\"'
     # MULTILINESTRING = r'(?s)\`.*?\`'
     FLOAT = r'([1-9]\d*(\.\d*[1-9])|0\.\d*[1-9]+)'
 
@@ -150,7 +149,7 @@ class CreeperExecute:
             print(result)
         if result is not None and isinstance(result, float):
             print(result)
-        if isinstance(result, str) and result[0] == '"' or result[0] == "'":
+        if isinstance(result, str) and result[0] == '"':
             print(result)
 
     def walkTree(self, node):

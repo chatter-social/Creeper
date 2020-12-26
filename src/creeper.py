@@ -4,16 +4,17 @@ import re
 import sys
 
 class CreeperLexer(Lexer): 
-    tokens = { VAR, FUNCTION, DO, NAME, STRING, NUMBER, FLOAT } 
+    tokens = { VAR, FUNCTION, DO, ANYTHING, NAME, STRING, NUMBER, FLOAT } 
     ignore = '\t '
     literals = { '=', '+', '-', '/',  
-                '*', '(', ')', ',', ';', '&', '(', ')', ':', '.', '`'}
+                '*', '(', ')', ',', ';', '&', '(', ')', ':', '.', '`', '@'}
   
   
     # define tokens as regular expressions
     VAR = r'var'
     FUNCTION = r'define'
     DO = r'do|times'
+    ANYTHING = r'@.*@'
     NAME = r'[a-zA-Z_][a-zA-Z0-9_]*'
     STRING = r'\".*?\"'
     # MULTILINESTRING = r'(?s)\`.*?\`'
@@ -89,15 +90,13 @@ class CreeperParser(Parser):
     def var_assign(self, p): 
         return ('var_assign', p.NAME, p.STRING)
     
-    @_('FUNCTION NAME "(" NAME ")" ":" STRING ";"') 
+    @_('FUNCTION NAME "(" ANYTHING ")" ":" STRING ";"') 
     def function_define(self, p): 
-        return ('function_define', p.NAME0, p.NAME1, p.STRING)
+        return ('function_define', p.NAME, p.ANYTHING, p.STRING)
 
-    # NAME "(" ")" ":" STRING
-
-    @_('NAME "(" NAME ")"') 
+    @_('NAME "(" ANYTHING ")"') 
     def function_call(self, p): 
-        return ('function_call', p.NAME0, p.NAME1)
+        return ('function_call', p.NAME, p.ANYTHING)
 
     @_('DO STRING NUMBER DO') 
     def do_loop(self, p): 
@@ -196,17 +195,32 @@ class CreeperExecute:
             return node[1]
 
         if node[0] == 'function_call':
-            variable_name = self.env[node[1] + '_function'].split(',')[0]
-            try:
-                value = self.env[variable_name]
-            except KeyError:
-                self.env[variable_name] = int(0)
-            function_body = self.env[node[1] + '_function'].split(',')[1]
+            function_call_input = self.env[node[1] + '_function'].split(',')
+            function_input = self.walkTree(node[2]).replace('@', '').split(',')
+            function_input_list = []
+            for value in function_input:
+                try:
+                    value = float(value)
+                except ValueError:
+                    pass
+                function_input_list.append(value)
+            variable_list = []
+            for variable in range(len(function_call_input)-1):
+                variable = function_call_input[variable]
+                variable = variable.replace('@', '')
+                variable_list.append(variable)
+            for variable in range(len(variable_list)):
+                try:
+                    self.env[variable_list[variable]] = function_input_list[variable]
+                except IndexError:
+                    self.env[variable] = int(0)
+            function_body = self.env[node[1] + '_function'].split(',')[len(self.env[node[1] + '_function'].split(','))-1]
             function_body = function_body.split(';')
             lexer = CreeperLexer() 
             parser = CreeperParser()
             for line in function_body:
-                tree = parser.parse(lexer.tokenize(line)) 
+                tree = parser.parse(lexer.tokenize(line))
+                print(tree)
                 CreeperExecute(tree, env)
             return node[1]
 
@@ -226,7 +240,7 @@ class CreeperExecute:
             return node[1] 
   
         if node[0] == 'var': 
-            try: 
+            try:
                 return self.env[node[1]] 
             except LookupError: 
                 # print("Undefined name '"+node[1]+"' .") 
@@ -258,6 +272,7 @@ if __name__ == '__main__':
           
             if text: 
                 tree = parser.parse(lexer.tokenize(text)) 
-                # print(tree)
+                print(tree)
                 CreeperExecute(tree, env)
-                # print(env)
+                print(env)
+

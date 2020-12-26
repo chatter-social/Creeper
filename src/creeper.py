@@ -272,8 +272,11 @@ if __name__ == '__main__':
             except EOFError:
                 break
 
-            if text:
-                tree = parser.parse(lexer.tokenize(text))
-                # print(tree)
-                CreeperExecute(tree, env)
-                # print(env)
+            if text and text.lower() != 'exit()':
+                if text.lower != "exit":
+                    tree = parser.parse(lexer.tokenize(text))
+                    # print(tree)
+                    CreeperExecute(tree, env)
+                    # print(env)
+            else:
+                sys.exit(0)

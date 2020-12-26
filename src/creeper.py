@@ -7,9 +7,9 @@ class CreeperLexer(Lexer):
     tokens = { VAR, FUNCTION, DO, ANYTHING, NAME, STRING, NUMBER, FLOAT }
     ignore = '\t '
     literals = { '=', '+', '-', '/',
-                '*', '(', ')', ',', 
-                ';', '&', '(', ')', 
-                ':', '.', '`', '@'}
+                 '*', '(', ')', ',', 
+                 ';', '&', '(', ')', 
+                 ':', '.', '`', '@'}
 
 
     # define tokens as regular expressions

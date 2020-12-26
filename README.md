@@ -3,7 +3,7 @@
 
 Creeper is a dynamic, interpreted language.
 
-## Quick Tutorial
+## Demo
 
 In this quick demo, I will explain how to write a basic program in Creeper that will display ten numbers of the Fibonacci sequence.
 

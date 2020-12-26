@@ -1,0 +1,7 @@
+interpreter:
+  - src/**/*
+
+examples: examples/*
+
+README:
+  - README.md

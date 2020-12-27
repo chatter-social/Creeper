@@ -249,7 +249,7 @@ class CreeperExecute:
                 return 0
 
 if __name__ == '__main__':
-    print('Creeper Interpreter v1.1.3')
+    print('Creeper Interpreter v1.1.4')
     lexer = CreeperLexer()
     parser = CreeperParser()
     env = {}

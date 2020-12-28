@@ -21,5 +21,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pip install coveralls
+        pip install pytest-cov
         pip install -r requirements.txt
+        pytest-cov
         coveralls

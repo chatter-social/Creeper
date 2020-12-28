@@ -21,7 +21,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         pip install coveralls
+        pip install pytest
         pip install pytest-cov
         pip install -r requirements.txt
-        py.test --cov-report term --cov=./src/creeper.py
+        pytest --cov-report term
         coveralls

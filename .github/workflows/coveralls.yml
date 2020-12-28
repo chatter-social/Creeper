@@ -11,10 +11,10 @@ jobs:
 
     - uses: actions/checkout@v1
 
-    - name: Use Node.js 10.x
+    - name: Use Python 3.8.6
       uses: actions/setup-python@v1
       with:
-        python-version: 3.8.2
+        python-version: 3.8.6
 
     - name: pip install coveralls, pip install -r requirements.txt
       run: |

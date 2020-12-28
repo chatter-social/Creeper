@@ -23,5 +23,5 @@ jobs:
         pip install coveralls
         pip install pytest-cov
         pip install -r requirements.txt
-        pytest-cov
+        py.test --cov-report term --cov=. src/creeper.py
         coveralls

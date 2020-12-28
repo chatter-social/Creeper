@@ -1,28 +1,27 @@
-on: ["push", "pull_request"]
-
 name: Coveralls
+on: [push, pull_request]
 
 jobs:
-
-  build:
-    name: Build
+  test:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v1
 
-    - uses: actions/checkout@v1
+    - name: Unit tests
+      run: make test
 
-    - name: Use Python 3.8.6
-      uses: actions/setup-python@v1
+    - name: Coveralls
+      uses: AndreMiras/coveralls-python-action@develop
       with:
-        python-version: 3.8.6
+        parallel: true
+        flag-name: Unit Test
 
-    - name: pip install coveralls, pip install -r requirements.txt
-      env: 
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        pip install coveralls
-        pip install pytest
-        pip install pytest-cov
-        pip install -r requirements.txt
-        pytest --cov-report term
-        coveralls
+  coveralls_finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Coveralls Finished
+      uses: AndreMiras/coveralls-python-action@develop
+      with:
+        parallel-finished: true

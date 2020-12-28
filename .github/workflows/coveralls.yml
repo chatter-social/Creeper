@@ -17,6 +17,7 @@ jobs:
         python-version: 3.8.6
 
     - name: pip install coveralls, pip install -r requirements.txt
+      env: GITHUB_TOKEN ${{ secrets.GITHUB_TOKEN }}
       run: |
         pip install coveralls
         pip install -r requirements.txt

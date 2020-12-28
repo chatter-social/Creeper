@@ -1,5 +1,8 @@
 interpreter:
-  - src/**/*
+  - src/creeper.py
+  
+bundler:
+  - src/bundler.py
 
 examples: examples/*
 

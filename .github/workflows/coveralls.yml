@@ -2,7 +2,7 @@ name: Coveralls
 on: ["push", "pull_request"]
 
 jobs:
-  run build script:
+  Build:
     name: Linux Coverage test
     runs-on: ubuntu-latest
     

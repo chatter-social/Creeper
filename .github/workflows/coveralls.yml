@@ -7,6 +7,9 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
+      - name: Setup Python
+        uses: actions/setup-python@v2
+
       - name: Run coverage commands
         run: |
            pip install --upgrade pip

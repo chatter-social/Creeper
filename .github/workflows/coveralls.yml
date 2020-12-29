@@ -1,0 +1,13 @@
+name: Coveralls
+on: ["push", "pull_request"]
+
+jobs:
+  run build script:
+    name: Linux Coverage test
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Moving build to artifacts directory
+      run: ./actions_build.sh
+      - with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

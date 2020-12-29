@@ -1,5 +1,5 @@
 # Creeper
-![Lines of code](https://img.shields.io/tokei/lines/github/chatter-social/Creeper?color=1) [![Coverage Status](https://coveralls.io/repos/github/chatter-social/Creeper/badge.svg?branch=main)](https://coveralls.io/github/chatter-social/Creeper?branch=main)
+![Lines of code](https://img.shields.io/tokei/lines/github/chatter-social/Creeper?color=1)
 
 Creeper is a dynamic, interpreted language.
 

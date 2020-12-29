@@ -8,6 +8,6 @@ jobs:
     
     steps:
     - name: Moving build to artifacts directory
-      run: ./actions_build.sh
-      - with:
-        github-token: ${{ secrets.GITHUB_TOKEN }}
+      run: ./build_actions.sh
+      env:
+         github-token: ${{ secrets.GITHUB_TOKEN }}

@@ -7,7 +7,6 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-    - name: Moving build to artifacts directory
-      run: build_actions.sh
-      env:
-         github-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Run coverage commands
+        run: |
+         ./build_actions.sh

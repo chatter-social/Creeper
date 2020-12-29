@@ -9,4 +9,6 @@ jobs:
     steps:
       - name: Run coverage commands
         run: |
-         ./build_actions.sh
+           pip install coveralls
+           coverage run --source=Creeper -m pytest src/
+           coveralls

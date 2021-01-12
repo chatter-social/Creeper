@@ -273,7 +273,7 @@ if __name__ == '__main__':
                 break
 
             if text and text.lower() != 'exit()':
-                if text.lower != "exit":
+                if text.lower != "exit()":
                     tree = parser.parse(lexer.tokenize(text))
                     # print(tree)
                     CreeperExecute(tree, env)

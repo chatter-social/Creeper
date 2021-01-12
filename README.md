@@ -1,5 +1,5 @@
 # Creeper
-![Lines of code](https://img.shields.io/tokei/lines/github/chatter-social/Creeper?color=1)
+![Lines of code](https://img.shields.io/tokei/lines/github/chatter-social/Creeper?color=1) [![Chatterware](https://img.shields.io/badge/license%20addition-Chatterware-%2385ff95?labelColor=black)](https://github.com/chatter-social/chatterware)
 
 Creeper is a dynamic, interpreted language.
 
@@ -38,3 +38,11 @@ Creeper Interpreter
 ```
 ## DISCLAIMER
 Creeper is currently very young, and therefore lacks important features. Feature updates will occur very regularly.
+
+##  Chatterware
+
+<!-- Project --> is Chatterware! 🗣<br>
+This means that you are free to use this project, as long as you give it a :star: and spread the word!
+If you use this project, it is encouraged that you make a contribution, especially if you haven't ever contributed to open source!
+Never contributed to open source? Read this guide: https://opensource.guide/how-to-contribute/ <br>
+Your contributions make us _**chatter**_ appreciation! ❤️

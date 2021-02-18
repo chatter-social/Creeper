@@ -6,8 +6,8 @@ The table below shows Creeper versions that are currently supported.
 
 | Version | Supported          |
 | ------- | ------------------ |
-| 1.1.x   | :white_check_mark: |
-| < 1.1.1   | :x:                |
+| > 1.1.3   | :white_check_mark: |
+| < 1.1.4   | :x:                |
 
 ## Reporting a Vulnerability
 
